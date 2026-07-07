@@ -1,9 +1,52 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Warna — berangkat dari material kayu & craft */
+    --color-canvas: #F7F3EC;
+    --color-ink: #2B2420;
+    --color-walnut: #6B4226;
+    --color-walnut-dark: #4A2D18;
+    --color-rust: #B5502D;
+    --color-rust-dark: #96401F;
+    --color-sage: #7C8471;
+    --color-brass: #C9A15D;
+
+    /* Tipografi */
+    --font-display: 'Fraunces', serif;
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+}
+
+/* Signature element: garis pembatas serat kayu, dipakai antar section */
+.wood-divider {
+    height: 12px;
+    width: 100%;
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 40px,
+            color-mix(in srgb, var(--color-walnut) 15%, transparent) 41px,
+            transparent 43px
+        );
+    position: relative;
+}
+
+.wood-divider::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 1px;
+    top: 50%;
+    background: color-mix(in srgb, var(--color-walnut) 25%, transparent);
 }
