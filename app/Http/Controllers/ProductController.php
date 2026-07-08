@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Category;
@@ -26,10 +25,10 @@ class ProductController extends Controller
 
         $categories = Category::active()->parentOnly()->orderBy('sort_order')->get();
 
-        return view('produk.index', [
-            'products' => $products,
-            'categories' => $categories,
-            'title' => 'Semua Produk - ' . config('app.name'),
+        return view('pages.produk.index', [
+            'products'        => $products,
+            'categories'      => $categories,
+            'title'           => 'Semua Produk - ' . config('app.name'),
             'metaDescription' => 'Jelajahi koleksi furniture kayu solid kami: sofa, meja, lemari, dan kursi berkualitas.',
         ]);
     }
@@ -45,14 +44,14 @@ class ProductController extends Controller
             $product->increment('views_count');
         }
 
-        $product->load(['images', 'variants' => fn ($q) => $q->active(), 'reviews.user']);
+        $product->load(['images', 'variants' => fn($q) => $q->active(), 'reviews.user']);
 
         $related = $this->produkService->getRelated($product);
 
-        return view('produk.show', [
-            'product' => $product,
-            'related' => $related,
-            'title' => $product->meta_title ?: $product->name . ' - ' . config('app.name'),
+        return view('pages.produk.show', [
+            'product'         => $product,
+            'related'         => $related,
+            'title'           => $product->meta_title ?: $product->name . ' - ' . config('app.name'),
             'metaDescription' => $product->meta_description ?: $product->short_description,
         ]);
     }
@@ -72,12 +71,23 @@ class ProductController extends Controller
 
         $categories = Category::active()->parentOnly()->orderBy('sort_order')->get();
 
-        return view('produk.index', [
-            'products' => $products,
-            'categories' => $categories,
-            'activeCategory' => $category,
-            'title' => $category->meta_title ?: $category->name . ' - ' . config('app.name'),
+        return view('pages.produk.index', [
+            'products'        => $products,
+            'categories'      => $categories,
+            'activeCategory'  => $category,
+            'title'           => $category->meta_title ?: $category->name . ' - ' . config('app.name'),
             'metaDescription' => $category->meta_description ?: $category->description,
         ]);
     }
+
+    private function getAvailableMaterials()
+    {
+        return Product::query()
+            ->active()
+            ->whereNotNull('material')
+            ->distinct()
+            ->orderBy('material')
+            ->pluck('material');
+    }
+
 }
