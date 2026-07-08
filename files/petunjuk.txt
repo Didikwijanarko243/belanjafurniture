@@ -1,0 +1,42 @@
+Oke, lengkap. Karena belum ada login, aku pakai pendekatan session-based (baik cart maupun wishlist dikenali lewat session_id, bukan user_id) — supaya tetap jalan buat pengunjung guest. Satu penyesuaian: tabel wishlists kamu sekarang cuma punya user_id, jadi aku tambahin migration kecil buat kasih kolom session_id.
+Aku susun jadi beberapa bagian: migration → service → controller → route → view/JS.Created 5 files, ran a commandCreated 5 files, ran a commandSekarang route-nya. Ini versi lengkap web.php kamu ditambah rute cart & wishlist:The user prompt is empty, so I cannot determine the primary language. However, based on the thinking block being in English, here is the summary:
+
+Orchestrated comprehensive e-commerce feature implementation strategyThe user prompt is empty, so I cannot determine the primary language. However, based on the thinking block being in English, here is the summary:
+
+Orchestrated comprehensive e-commerce feature implementation strategySekarang layout perlu sedikit penyesuaian: tag CSRF meta (wajib buat fetch POST), dan id di badge keranjang biar bisa diupdate live via JS.Architected view composition system and mapped feature implementation roadmapArchitected view composition system and mapped feature implementation roadmapSekarang update product-card.blade.php biar ada tombol hati (wishlist):The user prompt is empty, so I cannot determine the primary language. However, based on the thinking block being in English, here is the summary:
+
+Engineered wishlist feature integration into product interfaceThe user prompt is empty, so I cannot determine the primary language. However, based on the thinking block being in English, here is the summary:
+
+Engineered wishlist feature integration into product interfaceSekarang tambahkan tombol wishlist di halaman detail produk:Architected wishlist and cart modules with event delegation and API integrationArchitected wishlist and cart modules with event delegation and API integrationSekarang update initAddToCart di product-detail.js supaya betulan nge-POST ke server (bukan placeholder lagi), dan update badge keranjang di navbar secara live:Orchestrated setup documentation and compiled modified filesOrchestrated setup documentation and compiled modified filesSekarang kumpulkan semua file dan siapkan instruksi terakhir (View Composer + import JS).Ran a command, read a fileRan a command, read a fileSemua file udah siap. Ini yang perlu kamu lakukan supaya nyambung semua:
+1. Jalankan migration baru (nambah session_id ke tabel wishlists):
+bashphp artisan migrate
+2. Tambahkan View Composer di app/Providers/AppServiceProvider.php, dalam method boot() — ini yang bikin $cartCount (badge navbar) dan $wishlistProductIds (status hati aktif/tidak) otomatis tersedia di semua view tanpa perlu di-pass manual dari tiap controller:
+phpuse Illuminate\Support\Facades\View;
+use App\Services\CartService;
+use App\Services\WishlistService;
+
+public function boot(): void
+{
+    View::composer('layouts.app', function ($view) {
+        $view->with([
+            'cartCount' => app(CartService::class)->getItemCount(),
+            'wishlistCount' => app(WishlistService::class)->getCount(),
+        ]);
+    });
+
+    View::composer(['components.product-card', 'produk.show'], function ($view) {
+        $view->with('wishlistProductIds', app(WishlistService::class)->getProductIds());
+    });
+}
+3. Import JS baru di resources/js/app.js:
+jsimport { initProductDetailPage } from './product-detail';
+import { initWishlistButtons } from './wishlist';
+
+initProductDetailPage();
+initWishlistButtons();
+Ringkasan alur:
+
+Guest dikenali lewat UUID di session (guest_session_id), disimpan sebagai session_id di tabel carts & wishlists — jadi keranjang/wishlist tetap "ingat" isinya selama session browser aktif, tanpa perlu login.
+Tombol hati ada di kartu produk (grid) dan halaman detail, toggle via AJAX, badge navbar update otomatis.
+Tombol "Tambah ke Keranjang" di halaman detail sekarang beneran POST ke /keranjang/tambah, badge keranjang ikut update live.
+Halaman /keranjang dan /wishlist sudah ada juga (link di navbar sudah otomatis nyambung, gak perlu ubah apa-apa lagi di situ).
