@@ -23,6 +23,7 @@ class CartService
             session([self::SESSION_KEY => (string) Str::uuid()]);
         }
 
+        // dd(self::SESSION_KEY);
         return session(self::SESSION_KEY);
     }
 

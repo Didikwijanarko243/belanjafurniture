@@ -14,6 +14,7 @@ class WishlistService
 
     protected function sessionId(): string
     {
+        // dd($this->cartService->getSessionId());
         return $this->cartService->getSessionId();
     }
 
@@ -22,6 +23,7 @@ class WishlistService
      */
     public function toggle(int $productId): bool
     {
+        // dd($this->sessionId());
         $existing = Wishlist::where('session_id', $this->sessionId())
             ->where('product_id', $productId)
             ->first();
@@ -42,6 +44,7 @@ class WishlistService
 
     public function getProductIds(): Collection
     {
+        // dd($this->sessionId());
         return Wishlist::where('session_id', $this->sessionId())->pluck('product_id');
     }
 

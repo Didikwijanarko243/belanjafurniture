@@ -21,6 +21,7 @@ class WishlistController extends Controller
     {
         $productIds = $this->wishlistService->getProductIds();
 
+        // dd($productIds);
         $products = Product::query()
             ->whereIn('id', $productIds)
             ->with(['images' => fn ($q) => $q->where('is_primary', true), 'category'])

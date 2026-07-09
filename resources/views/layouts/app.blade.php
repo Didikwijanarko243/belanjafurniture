@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="bg-canvas text-ink antialiased">
 
     {{-- ============ NAVBAR ============ --}}
@@ -33,9 +37,7 @@
                 <x-nav-link href="{{ route('produk.index') }}" :active="request()->routeIs('produk.*')">
                     Produk
                 </x-nav-link>
-                <x-nav-link href="{{ url('/kategori') }}" :active="request()->routeIs('kategori.*')">
-                    Kategori
-                </x-nav-link>
+                <x-mega-menu :categories="$navCategories ?? collect()" />
                 <x-nav-link href="{{ url('/tentang') }}" :active="request()->routeIs('tentang')">
                     Tentang Kami
                 </x-nav-link>
@@ -47,41 +49,52 @@
             {{-- Icons: search, wishlist, cart, akun --}}
             <div class="flex items-center gap-5">
                 <button aria-label="Cari produk" class="text-ink/70 hover:text-walnut transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
                 </button>
 
-                <a href="{{ url('/wishlist') }}" aria-label="Wishlist" class="relative text-ink/70 hover:text-walnut transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                <a href="{{ url('/wishlist') }}" aria-label="Wishlist"
+                    class="relative text-ink/70 hover:text-walnut transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                     </svg>
-                    @if(($wishlistCount ?? 0) > 0)
-                        <span id="wishlist-count-badge" class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
+                    @if (($wishlistCount ?? 0) > 0)
+                        <span id="wishlist-count-badge"
+                            class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
                             {{ $wishlistCount }}
                         </span>
                     @else
-                        <span id="wishlist-count-badge" class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
+                        <span id="wishlist-count-badge"
+                            class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
                     @endif
                 </a>
 
-                <a href="{{ url('/keranjang') }}" aria-label="Keranjang belanja" class="relative text-ink/70 hover:text-walnut transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"/>
-                        <circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                <a href="{{ url('/keranjang') }}" aria-label="Keranjang belanja"
+                    class="relative text-ink/70 hover:text-walnut transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                     </svg>
-                    @if(($cartCount ?? 0) > 0)
-                        <span id="cart-count-badge" class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
+                    @if (($cartCount ?? 0) > 0)
+                        <span id="cart-count-badge"
+                            class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
                             {{ $cartCount }}
                         </span>
                     @else
-                        <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
+                        <span id="cart-count-badge"
+                            class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
                     @endif
                 </a>
 
-                <a href="{{ url('/akun') }}" class="hidden sm:inline-flex items-center gap-2 pl-5 border-l border-walnut/15 text-sm font-medium text-ink/70 hover:text-walnut transition-colors">
+                <a href="{{ url('/akun') }}"
+                    class="hidden sm:inline-flex items-center gap-2 pl-5 border-l border-walnut/15 text-sm font-medium text-ink/70 hover:text-walnut transition-colors">
                     Akun
                 </a>
             </div>
@@ -112,7 +125,8 @@
             <div>
                 <h3 class="font-semibold text-sm text-brass mb-4 tracking-wide uppercase">Belanja</h3>
                 <ul class="space-y-2 text-sm text-canvas/70">
-                    <li><a href="{{ url('/produk') }}" class="hover:text-canvas transition-colors">Semua Produk</a></li>
+                    <li><a href="{{ url('/produk') }}" class="hover:text-canvas transition-colors">Semua Produk</a>
+                    </li>
                     <li><a href="{{ url('/kategori') }}" class="hover:text-canvas transition-colors">Kategori</a></li>
                     <li><a href="{{ url('/promo') }}" class="hover:text-canvas transition-colors">Promo</a></li>
                 </ul>
@@ -121,8 +135,10 @@
             <div>
                 <h3 class="font-semibold text-sm text-brass mb-4 tracking-wide uppercase">Bantuan</h3>
                 <ul class="space-y-2 text-sm text-canvas/70">
-                    <li><a href="{{ url('/cara-belanja') }}" class="hover:text-canvas transition-colors">Cara Belanja</a></li>
-                    <li><a href="{{ url('/pengiriman') }}" class="hover:text-canvas transition-colors">Pengiriman & Retur</a></li>
+                    <li><a href="{{ url('/cara-belanja') }}" class="hover:text-canvas transition-colors">Cara
+                            Belanja</a></li>
+                    <li><a href="{{ url('/pengiriman') }}" class="hover:text-canvas transition-colors">Pengiriman &
+                            Retur</a></li>
                     <li><a href="{{ url('/faq') }}" class="hover:text-canvas transition-colors">FAQ</a></li>
                 </ul>
             </div>
@@ -142,4 +158,5 @@
     </footer>
 
 </body>
+
 </html>
