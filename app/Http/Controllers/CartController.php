@@ -23,7 +23,7 @@ class CartController extends Controller
         $cart = $this->cartService->getCurrentCart();
         $cart->load(['items.product.images', 'items.variant']);
 
-        return view('cart.index', [
+        return view('pages.cart.index', [
             'cart' => $cart,
             'title' => 'Keranjang Belanja - ' . config('app.name'),
         ]);

@@ -186,6 +186,20 @@
                 >
                     Tambah ke Keranjang
                 </button>
+                <button
+                    type="button"
+                    class="wishlist-toggle w-12 h-12 shrink-0 flex items-center justify-center border border-walnut/20 rounded-md hover:border-walnut transition-colors"
+                    data-product-id="{{ $product->id }}"
+                    aria-label="Simpan ke wishlist"
+                    aria-pressed="{{ (isset($wishlistProductIds) && $wishlistProductIds->contains($product->id)) ? 'true' : 'false' }}"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 wishlist-icon" viewBox="0 0 24 24"
+                         fill="{{ (isset($wishlistProductIds) && $wishlistProductIds->contains($product->id)) ? 'var(--color-rust)' : 'none' }}"
+                         stroke="{{ (isset($wishlistProductIds) && $wishlistProductIds->contains($product->id)) ? 'var(--color-rust)' : 'currentColor' }}"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </button>
                 <a
                     id="btn-whatsapp-order"
                     href="#"

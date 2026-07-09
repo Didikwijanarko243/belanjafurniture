@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\WishlistController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -19,3 +21,13 @@ Route::get('/produk/{product:slug}', [ProductController::class, 'show'])->name('
 
 // ============ KATEGORI ============
 Route::get('/kategori/{category:slug}', [ProductController::class, 'byCategory'])->name('kategori.show');
+
+// ============ KERANJANG ============
+Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang.index');
+Route::post('/keranjang/tambah', [CartController::class, 'store'])->name('keranjang.store');
+Route::patch('/keranjang/{cartItem}', [CartController::class, 'update'])->name('keranjang.update');
+Route::delete('/keranjang/{cartItem}', [CartController::class, 'destroy'])->name('keranjang.destroy');
+
+// ============ WISHLIST ============
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');

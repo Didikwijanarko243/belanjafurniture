@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? config('app.name', 'Toko Furniture') }}</title>
 
     <meta name="description" content="{{ $metaDescription ?? 'Furniture kayu berkualitas untuk rumah Anda.' }}">
@@ -52,10 +53,17 @@
                     </svg>
                 </button>
 
-                <a href="{{ url('/wishlist') }}" aria-label="Wishlist" class="text-ink/70 hover:text-walnut transition-colors">
+                <a href="{{ url('/wishlist') }}" aria-label="Wishlist" class="relative text-ink/70 hover:text-walnut transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
+                    @if(($wishlistCount ?? 0) > 0)
+                        <span id="wishlist-count-badge" class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
+                            {{ $wishlistCount }}
+                        </span>
+                    @else
+                        <span id="wishlist-count-badge" class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
+                    @endif
                 </a>
 
                 <a href="{{ url('/keranjang') }}" aria-label="Keranjang belanja" class="relative text-ink/70 hover:text-walnut transition-colors">
@@ -65,9 +73,11 @@
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
                     @if(($cartCount ?? 0) > 0)
-                        <span class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
+                        <span id="cart-count-badge" class="absolute -top-2 -right-2 w-4 h-4 flex items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full">
                             {{ $cartCount }}
                         </span>
+                    @else
+                        <span id="cart-count-badge" class="hidden absolute -top-2 -right-2 w-4 h-4 items-center justify-center bg-rust text-canvas text-[10px] font-semibold rounded-full"></span>
                     @endif
                 </a>
 

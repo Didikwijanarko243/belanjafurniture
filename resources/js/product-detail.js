@@ -161,14 +161,57 @@ function initAddToCart(root, getSelection, getQty) {
     if (!btn) return;
 
     btn.addEventListener('click', () => {
-        // TODO: sambungkan ke route keranjang begitu sudah dibuat.
-        // Sementara ini placeholder supaya UI sudah bisa dites dari sekarang.
         const { variant } = getSelection ? getSelection() : { variant: null };
-        console.log('Tambah ke keranjang:', {
-            productId: root.dataset.productId,
-            variantId: variant?.id ?? null,
-            qty: getQty(),
-        });
-        alert('Fitur keranjang belum tersambung. Untuk sekarang, pakai tombol Pesan via WhatsApp.');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+        const originalLabel = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Menambahkan...';
+
+        fetch('/keranjang/tambah', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                product_id: root.dataset.productId,
+                product_variant_id: variant?.id ?? null,
+                quantity: getQty(),
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (!data.success) {
+                    btn.textContent = 'Gagal, coba lagi';
+                    return;
+                }
+                updateCartBadge(data.cartCount);
+                btn.textContent = 'Ditambahkan \u2713';
+            })
+            .catch(() => {
+                btn.textContent = 'Gagal, coba lagi';
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    btn.textContent = originalLabel;
+                    btn.disabled = false;
+                }, 1500);
+            });
     });
+}
+
+function updateCartBadge(count) {
+    const badge = document.getElementById('cart-count-badge');
+    if (!badge) return;
+
+    if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+    } else {
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+    }
 }

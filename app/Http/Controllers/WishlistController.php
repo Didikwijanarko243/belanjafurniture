@@ -26,7 +26,7 @@ class WishlistController extends Controller
             ->with(['images' => fn ($q) => $q->where('is_primary', true), 'category'])
             ->get();
 
-        return view('wishlist.index', [
+        return view('pages.wishlist.index', [
             'products' => $products,
             'title' => 'Wishlist - ' . config('app.name'),
         ]);
