@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\PageController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -31,3 +32,10 @@ Route::delete('/keranjang/{cartItem}', [CartController::class, 'destroy'])->name
 // ============ WISHLIST ============
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+
+
+//============= TENTANG ===============
+Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
+
+// ============ KONTAK =================
+Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
