@@ -5,6 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\OrderTrackingController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -39,3 +43,39 @@ Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
 
 // ============ KONTAK =================
 Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
+
+Route::get('/cara-belanja', [PageController::class, 'caraBelanja'])->name('cara-belanja');
+Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
+
+
+
+// Cart → WhatsApp (pastikan ini sudah ada, sesuaikan nama controller cart kamu)
+Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
+
+// Tracking order (publik)
+Route::get('/lacak-pesanan', [OrderTrackingController::class, 'form'])->name('order.track.form');
+Route::post('/lacak-pesanan', [OrderTrackingController::class, 'lookup'])->name('order.track');
+
+
+
+
+
+// Admin
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login']);
+
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+        Route::get('/konsultasi', [AdminConsultationController::class, 'index'])->name('consultations.index');
+        Route::get('/konsultasi/{consultation}', [AdminConsultationController::class, 'show'])->name('consultations.show');
+        Route::patch('/konsultasi/{consultation}', [AdminConsultationController::class, 'updateStatus'])->name('consultations.update');
+        Route::get('/konsultasi/{consultation}/jadikan-order', [AdminConsultationController::class, 'showConvertForm'])->name('consultations.convert.form');
+        Route::post('/konsultasi/{consultation}/jadikan-order', [AdminConsultationController::class, 'convertToOrder'])->name('consultations.convert');
+
+        Route::get('/order', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('/order/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::patch('/order/{order}', [AdminOrderController::class, 'updateStatus'])->name('orders.update');
+    });
+});

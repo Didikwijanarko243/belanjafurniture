@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderItem extends Model
+class ConsultationItem extends Model
 {
     protected $fillable = [
-        'order_id', 'product_id', 'product_variant_id',
+        'consultation_id', 'product_id', 'product_variant_id',
         'product_name', 'variant_name', 'quantity', 'price',
     ];
 
@@ -16,9 +16,9 @@ class OrderItem extends Model
         'price' => 'decimal:2',
     ];
 
-    public function order(): BelongsTo
+    public function consultation(): BelongsTo
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Consultation::class);
     }
 
     public function getSubtotalAttribute(): float

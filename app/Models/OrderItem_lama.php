@@ -9,11 +9,12 @@ class OrderItem extends Model
 {
     protected $fillable = [
         'order_id', 'product_id', 'product_variant_id',
-        'product_name', 'variant_name', 'quantity', 'price',
+        'product_name', 'variant_info', 'price', 'quantity', 'subtotal',
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
+        'subtotal' => 'decimal:2',
     ];
 
     public function order(): BelongsTo
@@ -21,8 +22,13 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function getSubtotalAttribute(): float
+    public function product(): BelongsTo
     {
-        return $this->price * $this->quantity;
+        return $this->belongsTo(Product::class);
+    }
+
+    public function variant(): BelongsTo
+    {
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 }

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     {{-- ============ HERO ============ --}}
     <section class="relative overflow-hidden bg-canvas">
         <div class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-rust via-brass to-sage"></div>
@@ -43,35 +42,39 @@
 
                     {{-- Langkah 1 --}}
                     <div class="relative flex gap-6">
-                        <div class="shrink-0 w-14 h-14 rounded-full bg-rust text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-full bg-rust text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
                             01
                         </div>
                         <div class="bg-white/60 rounded-xl border-t-4 border-rust p-6 shadow-sm flex-1">
                             <h3 class="font-display text-lg font-semibold text-walnut mb-2">Jelajahi & Pilih Produk</h3>
                             <p class="text-sm text-ink/65 leading-relaxed">
-                                Lihat katalog di halaman <a href="{{ route('produk.index') }}" class="text-rust font-medium hover:underline">Produk</a>,
+                                Lihat katalog di halaman <a href="{{ route('produk.index') }}"
+                                    class="text-rust font-medium hover:underline">Produk</a>,
                                 gunakan menu kategori untuk mempersempit pilihan sesuai kebutuhan ruangan Anda.
                             </p>
                         </div>
                     </div>
 
                     {{-- Langkah 2 --}}
+                    {{-- Langkah 2 --}}
                     <div class="relative flex gap-6">
-                        <div class="shrink-0 w-14 h-14 rounded-full bg-sage text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-full bg-sage text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
                             02
                         </div>
                         <div class="bg-white/60 rounded-xl border-t-4 border-sage p-6 shadow-sm flex-1">
-                            <h3 class="font-display text-lg font-semibold text-walnut mb-2">Simpan ke Wishlist</h3>
+                            <h3 class="font-display text-lg font-semibold text-walnut mb-2">Simpan ke Keranjang</h3>
                             <p class="text-sm text-ink/65 leading-relaxed">
-                                Tandai produk yang Anda minati dengan ikon hati agar mudah dibandingkan atau
-                                dibuka kembali sebelum menghubungi kami.
+                                Tambahkan produk yang Anda minati ke keranjang belanja agar mudah dibandingkan
+                                atau langsung dikonsultasikan ke tim kami.
                             </p>
                         </div>
                     </div>
-
                     {{-- Langkah 3 --}}
                     <div class="relative flex gap-6">
-                        <div class="shrink-0 w-14 h-14 rounded-full bg-brass text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-full bg-brass text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
                             03
                         </div>
                         <div class="bg-white/60 rounded-xl border-t-4 border-brass p-6 shadow-sm flex-1">
@@ -85,7 +88,8 @@
 
                     {{-- Langkah 4 --}}
                     <div class="relative flex gap-6">
-                        <div class="shrink-0 w-14 h-14 rounded-full bg-rust text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-full bg-rust text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
                             04
                         </div>
                         <div class="bg-white/60 rounded-xl border-t-4 border-rust p-6 shadow-sm flex-1">
@@ -99,7 +103,8 @@
 
                     {{-- Langkah 5 --}}
                     <div class="relative flex gap-6">
-                        <div class="shrink-0 w-14 h-14 rounded-full bg-sage text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
+                        <div
+                            class="shrink-0 w-14 h-14 rounded-full bg-sage text-canvas flex items-center justify-center font-display text-lg font-semibold z-10">
                             05
                         </div>
                         <div class="bg-white/60 rounded-xl border-t-4 border-sage p-6 shadow-sm flex-1">
@@ -186,5 +191,4 @@
             </a>
         </div>
     </section>
-
 @endsection

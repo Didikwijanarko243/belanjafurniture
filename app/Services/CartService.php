@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Cart;
@@ -34,7 +33,7 @@ class CartService
 
     public function addItem(int $productId, ?int $variantId, int $quantity): CartItem
     {
-        $cart = $this->getCurrentCart();
+        $cart    = $this->getCurrentCart();
         $product = Product::findOrFail($productId);
         $variant = $variantId ? ProductVariant::findOrFail($variantId) : null;
 
@@ -52,10 +51,10 @@ class CartService
         }
 
         return $cart->items()->create([
-            'product_id' => $productId,
+            'product_id'         => $productId,
             'product_variant_id' => $variantId,
-            'quantity' => $quantity,
-            'price' => $price,
+            'quantity'           => $quantity,
+            'price'              => $price,
         ]);
     }
 
@@ -74,5 +73,13 @@ class CartService
     public function getItemCount(): int
     {
         return (int) $this->getCurrentCart()->items()->sum('quantity');
+    }
+
+    public function getItems()
+    {
+        return $this->getCurrentCart()
+            ->items()
+            ->with(['product', 'variant'])
+            ->get();
     }
 }
