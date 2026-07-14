@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin') — {{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="bg-canvas text-ink font-body antialiased">
 
     <div class="flex min-h-screen">
@@ -38,6 +40,26 @@
                     </svg>
                     Order
                 </a>
+
+                <a href="{{ route('admin.categories.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+    {{ request()->routeIs('admin.categories.*') ? 'bg-rust text-canvas' : 'text-canvas/70 hover:bg-canvas/5 hover:text-canvas' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" />
+                    </svg>
+                    Kategori
+                </a>
+
+                <a href="{{ route('admin.products.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+    {{ request()->routeIs('admin.products.*') ? 'bg-rust text-canvas' : 'text-canvas/70 hover:bg-canvas/5 hover:text-canvas' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    Produk
+                </a>
             </nav>
 
             <div class="px-3 py-4 border-t border-canvas/10">
@@ -45,8 +67,9 @@
                     @csrf
                     <button type="submit"
                         class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-canvas/60 hover:bg-canvas/5 hover:text-canvas transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <polyline points="16 17 21 12 16 7" />
                             <line x1="21" y1="12" x2="9" y2="12" />
@@ -82,4 +105,5 @@
     </div>
 
 </body>
+
 </html>

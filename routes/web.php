@@ -1,21 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderTrackingController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WishlistController;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Route;
 
 // ============ HOME ============
 Route::get('/', function () {
     return view('pages.home', [
-        'categories' => Category::active()->parentOnly()->orderBy('sort_order')->get(),
+        'categories'       => Category::active()->parentOnly()->orderBy('sort_order')->get(),
         'featuredProducts' => Product::active()->featured()->with('images')->take(8)->get(),
     ]);
 })->name('home');
@@ -37,7 +39,6 @@ Route::delete('/keranjang/{cartItem}', [CartController::class, 'destroy'])->name
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
 
-
 //============= TENTANG ===============
 Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
 
@@ -47,18 +48,12 @@ Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
 Route::get('/cara-belanja', [PageController::class, 'caraBelanja'])->name('cara-belanja');
 Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
 
-
-
 // Cart → WhatsApp (pastikan ini sudah ada, sesuaikan nama controller cart kamu)
 Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
 
 // Tracking order (publik)
 Route::get('/lacak-pesanan', [OrderTrackingController::class, 'form'])->name('order.track.form');
 Route::post('/lacak-pesanan', [OrderTrackingController::class, 'lookup'])->name('order.track');
-
-
-
-
 
 // Admin
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -77,5 +72,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/order', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('/order/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::patch('/order/{order}', [AdminOrderController::class, 'updateStatus'])->name('orders.update');
+
+        Route::get('/kategori', [AdminCategoryController::class, 'index'])->name('categories.index');
+        Route::get('/kategori/tambah', [AdminCategoryController::class, 'create'])->name('categories.create');
+        Route::post('/kategori', [AdminCategoryController::class, 'store'])->name('categories.store');
+        Route::get('/kategori/{category}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/kategori/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/kategori/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
+        Route::get('/produk', [AdminProductController::class, 'index'])->name('products.index');
+        Route::get('/produk/tambah', [AdminProductController::class, 'create'])->name('products.create');
+        Route::post('/produk', [AdminProductController::class, 'store'])->name('products.store');
+        Route::get('/produk/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+        Route::put('/produk/{product}', [AdminProductController::class, 'update'])->name('products.update');
+        Route::delete('/produk/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
     });
 });
