@@ -12,6 +12,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WishlistController;
+
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -54,9 +55,11 @@ Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('
 Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
 
 // Tracking order (publik)
-Route::get('/lacak-pesanan', [OrderTrackingController::class, 'form'])->name('order.track.form');
-Route::post('/lacak-pesanan', [OrderTrackingController::class, 'lookup'])->name('order.track');
+// Route::get('/lacak-pesanan', [OrderTrackingController::class, 'form'])->name('order.track.form');
+// Route::post('/lacak-pesanan', [OrderTrackingController::class, 'lookup'])->name('order.track');
 
+Route::get('/lacak-pesanan', [OrderTrackingController::class, 'index'])->name('orders.track');
+Route::post('/lacak-pesanan', [OrderTrackingController::class, 'search'])->name('orders.track.search');
 // Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');

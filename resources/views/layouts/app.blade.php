@@ -93,9 +93,20 @@
                     @endif
                 </a>
 
-                <a href="{{ url('/akun') }}"
+                {{-- <a href="{{ url('/akun') }}"
                     class="hidden sm:inline-flex items-center gap-2 pl-5 border-l border-walnut/15 text-sm font-medium text-ink/70 hover:text-walnut transition-colors">
                     Akun
+                </a> --}}
+
+                <a href="{{ route('orders.track') }}"
+                    class="flex items-center gap-1.5 text-sm text-walnut/70 hover:text-rust transition-colors"
+                    title="Lacak Pesanan">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        <path d="M9 12h6M12 9v6" />
+                    </svg>
+                    <span class="hidden lg:inline">Lacak Pesanan</span>
                 </a>
             </div>
         </nav>
@@ -140,6 +151,12 @@
                     <li><a href="{{ url('/pengiriman') }}" class="hover:text-canvas transition-colors">Pengiriman &
                             Retur</a></li>
                     <li><a href="{{ url('/faq') }}" class="hover:text-canvas transition-colors">FAQ</a></li>
+                    <li>
+                        <a href="{{ route('orders.track') }}"
+                            class="text-canvas/70 hover:text-canvas text-sm transition-colors">
+                            Lacak Pesanan
+                        </a>
+                    </li>
                 </ul>
             </div>
 

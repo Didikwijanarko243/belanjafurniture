@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Services\CartService;
+use App\Services\ConsultationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,5 +23,10 @@ class OrderItem extends Model
     public function getSubtotalAttribute(): float
     {
         return $this->price * $this->quantity;
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }
