@@ -60,6 +60,26 @@
                     </svg>
                     Produk
                 </a>
+                <a href="{{ route('admin.reviews.index') }}"
+                    class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+{{ request()->routeIs('admin.reviews.*') ? 'bg-rust text-canvas' : 'text-canvas/70 hover:bg-canvas/5 hover:text-canvas' }}">
+                    <span class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M12 17.75l-6.172 3.245 1.179-6.873L2 9.755l6.9-1.002L12 2.5l3.1 6.253 6.9 1.002-5.007 4.367 1.179 6.873z" />
+                        </svg>
+                        Kelola Ulasan
+                    </span>
+
+                    @if ($pendingReviewCount ?? false)
+                        <span class="rounded-full bg-brass px-2 py-0.5 text-xs text-canvas">
+                            {{ $pendingReviewCount }}
+                        </span>
+                    @endif
+                </a>
+
             </nav>
 
             <div class="px-3 py-4 border-t border-canvas/10">

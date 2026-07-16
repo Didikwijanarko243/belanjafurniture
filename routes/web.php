@@ -5,10 +5,12 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WishlistController;
 use App\Models\Category;
 use App\Models\Product;
@@ -86,5 +88,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/produk/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
         Route::put('/produk/{product}', [AdminProductController::class, 'update'])->name('products.update');
         Route::delete('/produk/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+
+        ///////////////ulasan review////////
+        Route::post('/ulasan', [ReviewController::class, 'store'])->name('reviews.store');
+
+        
+            Route::get('/ulasan', [AdminReviewController::class, 'index'])->name('reviews.index');
+            Route::patch('/ulasan/{review}/approve', [AdminReviewController::class, 'approve'])->name('reviews.approve');
+            Route::patch('/ulasan/{review}/reject', [AdminReviewController::class, 'reject'])->name('reviews.reject');
+        
     });
 });

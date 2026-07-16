@@ -2,6 +2,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\Review;
 use App\Services\CartService;
 use App\Services\WishlistService;
 use Illuminate\Support\Facades\View;
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer(['components.product-card', 'produk.show'], function ($view) {
             $view->with('wishlistProductIds', app(WishlistService::class)->getProductIds());
+        });
+
+        View::composer('admin.partials.sidebar', function ($view) {
+            $view->with('pendingReviewCount', Review::where('status', 'pending')->count());
         });
     }
 }
