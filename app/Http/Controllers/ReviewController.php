@@ -26,6 +26,8 @@ class ReviewController extends Controller
 
         $this->reviewService->submit($order, $validated);
 
-        return back()->with('success', 'Terima kasih! Ulasan kamu sedang menunggu persetujuan admin.');
+        return redirect()
+            ->route('orders.show', $order->order_number)
+            ->with('success', 'Terima kasih! Ulasan kamu sedang menunggu persetujuan admin.');
     }
 }

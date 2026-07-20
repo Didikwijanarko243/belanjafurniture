@@ -28,6 +28,7 @@ Route::get('/', function () {
 // ============ PRODUK ============
 Route::get('/produk', [ProductController::class, 'index'])->name('produk.index');
 Route::get('/produk/{product:slug}', [ProductController::class, 'show'])->name('produk.show');
+Route::post('/produk/{produk:slug}/konsultasi', [ProductController::class, 'sendToWhatsapp'])->name('produk.whatsapp');
 
 // ============ KATEGORI ============
 Route::get('/kategori/{category:slug}', [ProductController::class, 'byCategory'])->name('kategori.show');
@@ -52,7 +53,7 @@ Route::get('/cara-belanja', [PageController::class, 'caraBelanja'])->name('cara-
 Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
 
 // Cart → WhatsApp (pastikan ini sudah ada, sesuaikan nama controller cart kamu)
-Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('cart.whatsapp');
+
 
 // Tracking order (publik)
 // Route::get('/lacak-pesanan', [OrderTrackingController::class, 'form'])->name('order.track.form');
@@ -60,6 +61,8 @@ Route::post('/cart/whatsapp', [CartController::class, 'sendToWhatsapp'])->name('
 
 Route::get('/lacak-pesanan', [OrderTrackingController::class, 'index'])->name('orders.track');
 Route::post('/lacak-pesanan', [OrderTrackingController::class, 'search'])->name('orders.track.search');
+Route::get('/lacak-pesanan/{order_number}', [OrderTrackingController::class, 'show'])->name('orders.show');
+Route::post('/ulasan', [ReviewController::class, 'store'])->name('review.store');
 // Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
@@ -93,7 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/produk/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 
         ///////////////ulasan review////////
-        Route::post('/ulasan', [ReviewController::class, 'store'])->name('reviews.store');
+        // Route::post('/ulasan', [ReviewController::class, 'store'])->name('reviews.store');
 
         
             Route::get('/ulasan', [AdminReviewController::class, 'index'])->name('reviews.index');

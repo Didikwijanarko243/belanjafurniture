@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CartService;
+use App\Services\ConsultationService;
 use App\Services\ProdukService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -44,7 +46,7 @@ class ProductController extends Controller
             $product->increment('views_count');
         }
 
-        $product->load(['images', 'variants' => fn($q) => $q->active(), 'reviews.user']);
+        $product->load(['images', 'variants' => fn($q) => $q->active(), 'approvedReviews']);
 
         $related = $this->produkService->getRelated($product);
 
@@ -88,6 +90,51 @@ class ProductController extends Controller
             ->distinct()
             ->orderBy('material')
             ->pluck('material');
+    }
+
+    public function sendToWhatsapp(
+        Request $request,
+        Product $produk,
+        CartService $cartService,
+        ConsultationService $consultationService
+    ) {
+        $validated = $request->validate([
+            'product_variant_id' => ['nullable', 'exists:product_variants,id'],
+            'quantity'           => ['required', 'integer', 'min:1'],
+        ]);
+
+        $variantId = $validated['product_variant_id'] ?? null;
+        $quantity  = $validated['quantity'];
+
+        // Cek stok sebelum bikin konsultasi
+        if ($variantId) {
+            $variant = $produk->variants->firstWhere('id', $variantId);
+            if (! $variant || $variant->stock < $quantity) {
+                return back()->with('error', 'Varian tidak tersedia atau stok tidak mencukupi.');
+            }
+        } elseif ($produk->stock < $quantity) {
+            return back()->with('error', 'Stok tidak mencukupi.');
+        }
+
+        $consultation = $consultationService->createFromProduct($produk, $cartService, $variantId, $quantity);
+
+        $pesan = "Halo, saya ingin konsultasi detail produk berikut:\n\n";
+
+        foreach ($consultation->items as $item) {
+            $pesan .= "- {$item->product_name}";
+            $pesan .= $item->variant_name ? " ({$item->variant_name})" : '';
+            $pesan .= " x{$item->quantity}\n";
+        }
+
+        $pesan .= "\nMohon info ketersediaan, harga, dan ongkos kirimnya. Terima kasih.";
+        $pesan .= "\n\nRef: KONSUL-{$consultation->id}";
+
+        $consultation->update(['whatsapp_message' => $pesan]);
+
+        $waNumber  = config('shop.whatsapp_number', '6281200000000');
+        $waLink    = "https://wa.me/{$waNumber}?text=" . urlencode($pesan);
+
+        return redirect()->away($waLink);
     }
 
 }

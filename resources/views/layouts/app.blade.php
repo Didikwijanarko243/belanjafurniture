@@ -29,7 +29,7 @@
                 {{ config('app.name', 'Kayuna') }}
             </a>
 
-            {{-- Nav links --}}
+            {{-- Nav links — desktop --}}
             <div class="hidden md:flex items-center gap-8 font-medium text-sm">
                 <x-nav-link href="{{ url('/') }}" :active="request()->routeIs('home')">
                     Beranda
@@ -46,15 +46,24 @@
                 </x-nav-link>
             </div>
 
-            {{-- Icons: search, wishlist, cart, akun --}}
-            <div class="flex items-center gap-5">
-                <button aria-label="Cari produk" class="text-ink/70 hover:text-walnut transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8" />
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                </button>
+            {{-- Icons: search, wishlist, cart, akun, lacak --}}
+            <div class="flex items-center gap-4 sm:gap-5">
+                <div class="relative">
+                    <button type="button" id="search-toggle" aria-label="Cari produk"
+                        class="text-ink/70 hover:text-walnut transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
+
+                    <form action="{{ route('produk.index') }}" method="GET" id="search-box"
+                        class="hidden absolute right-0 top-full mt-2 w-56 sm:w-64 bg-canvas border border-walnut/15 rounded-lg shadow-lg p-2 z-50">
+                        <input type="text" name="q" placeholder="Cari produk..." value="{{ request('q') }}"
+                            class="w-full text-sm rounded-md border-walnut/20 focus:border-rust focus:ring-rust/20">
+                    </form>
+                </div>
 
                 <a href="{{ url('/wishlist') }}" aria-label="Wishlist"
                     class="relative text-ink/70 hover:text-walnut transition-colors">
@@ -93,13 +102,8 @@
                     @endif
                 </a>
 
-                {{-- <a href="{{ url('/akun') }}"
-                    class="hidden sm:inline-flex items-center gap-2 pl-5 border-l border-walnut/15 text-sm font-medium text-ink/70 hover:text-walnut transition-colors">
-                    Akun
-                </a> --}}
-
                 <a href="{{ route('orders.track') }}"
-                    class="flex items-center gap-1.5 text-sm text-walnut/70 hover:text-rust transition-colors"
+                    class="hidden sm:flex items-center gap-1.5 text-sm text-walnut/70 hover:text-rust transition-colors"
                     title="Lacak Pesanan">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -108,8 +112,57 @@
                     </svg>
                     <span class="hidden lg:inline">Lacak Pesanan</span>
                 </a>
+
+                {{-- Hamburger — mobile only --}}
+                <button type="button" id="mobile-menu-toggle" aria-label="Buka menu" aria-expanded="false"
+                    class="md:hidden text-ink/70 hover:text-walnut transition-colors">
+                    <svg id="icon-menu-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                    <svg id="icon-menu-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
             </div>
         </nav>
+
+        {{-- Mobile menu panel --}}
+        <div id="mobile-menu" class="hidden md:hidden border-t border-walnut/10 bg-canvas">
+            <div class="px-6 py-4 flex flex-col gap-1 font-medium text-sm">
+                <a href="{{ url('/') }}"
+                    class="py-2.5 border-b border-walnut/5 {{ request()->routeIs('home') ? 'text-rust' : 'text-ink/80' }}">
+                    Beranda
+                </a>
+                <a href="{{ route('produk.index') }}"
+                    class="py-2.5 border-b border-walnut/5 {{ request()->routeIs('produk.*') ? 'text-rust' : 'text-ink/80' }}">
+                    Produk
+                </a>
+                @foreach ($navCategories ?? [] as $category)
+                    <a href="{{ route('kategori.show', $category->slug) }}"
+                        class="py-2.5 pl-4 border-b border-walnut/5 text-ink/60 text-[13px]">
+                        {{ $category->name }}
+                    </a>
+                @endforeach
+                <a href="{{ url('/tentang') }}"
+                    class="py-2.5 border-b border-walnut/5 {{ request()->routeIs('tentang') ? 'text-rust' : 'text-ink/80' }}">
+                    Tentang Kami
+                </a>
+                <a href="{{ url('/kontak') }}"
+                    class="py-2.5 border-b border-walnut/5 {{ request()->routeIs('kontak') ? 'text-rust' : 'text-ink/80' }}">
+                    Kontak
+                </a>
+                <a href="{{ route('orders.track') }}" class="py-2.5 text-ink/80">
+                    Lacak Pesanan
+                </a>
+            </div>
+        </div>
     </header>
 
     {{-- ============ KONTEN ============ --}}
@@ -138,7 +191,8 @@
                 <ul class="space-y-2 text-sm text-canvas/70">
                     <li><a href="{{ url('/produk') }}" class="hover:text-canvas transition-colors">Semua Produk</a>
                     </li>
-                    <li><a href="{{ url('/kategori') }}" class="hover:text-canvas transition-colors">Kategori</a></li>
+                    <li><a href="{{ url('/kategori') }}" class="hover:text-canvas transition-colors">Kategori</a>
+                    </li>
                     <li><a href="{{ url('/promo') }}" class="hover:text-canvas transition-colors">Promo</a></li>
                 </ul>
             </div>
