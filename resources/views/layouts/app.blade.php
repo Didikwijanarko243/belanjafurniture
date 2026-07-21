@@ -2,19 +2,31 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? config('app.name', 'Toko Furniture') }}</title>
-
     <meta name="description" content="{{ $metaDescription ?? 'Furniture kayu berkualitas untuk rumah Anda.' }}">
 
+    <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
+
+    <meta property="og:type" content="{{ $ogType ?? 'website' }}">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:title" content="{{ $ogTitle ?? ($title ?? config('app.name')) }}">
+    <meta property="og:description" content="{{ $ogDescription ?? ($metaDescription ?? '') }}">
+    <meta property="og:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $ogTitle ?? ($title ?? config('app.name')) }}">
+    <meta name="twitter:description" content="{{ $ogDescription ?? ($metaDescription ?? '') }}">
+    <meta name="twitter:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
+
+    @foreach ($jsonLd ?? [] as $schema)
+        <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    @endforeach
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-
+    <title>{{ $ogTitle ?? ($title ?? config('app.name')) }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -26,7 +38,7 @@
 
             {{-- Logo --}}
             <a href="{{ url('/') }}" class="font-display text-2xl font-semibold text-walnut tracking-tight">
-                {{ config('app.name', 'Kayuna') }}
+                {{ config('app.name', 'Brankas Murah Jombang') }}
             </a>
 
             {{-- Nav links — desktop --}}
@@ -182,7 +194,8 @@
                     {{ config('app.name', 'Kayuna') }}
                 </div>
                 <p class="text-sm text-canvas/60 leading-relaxed">
-                    Furniture kayu solid, dibuat dengan tangan pengrajin lokal untuk rumah yang terasa hangat.
+                    Brankas tahan api berkualitas, dirancang untuk melindungi dokumen, uang tunai, dan aset berharga
+                    dengan keamanan yang dapat diandalkan.
                 </p>
             </div>
 

@@ -27,21 +27,19 @@ class ProductController extends Controller
 
         $categories = Category::active()->parentOnly()->orderBy('sort_order')->get();
 
-        return view('pages.produk.index', [
-            'products'        => $products,
-            'categories'      => $categories,
-            'title'           => 'Semua Produk - ' . config('app.name'),
-            'metaDescription' => 'Jelajahi koleksi furniture kayu solid kami: sofa, meja, lemari, dan kursi berkualitas.',
-        ]);
+        $seo = app(\App\Services\SeoService::class)->forPage(
+            'Semua Produk - ' . config('app.name'),
+            'Jelajahi koleksi furniture kayu solid kami: sofa, meja, lemari, dan kursi berkualitas.'
+        );
+
+        return view('pages.produk.index', array_merge($seo, [
+            'products'   => $products,
+            'categories' => $categories,
+        ]));
     }
 
-    /**
-     * Detail satu produk berdasarkan slug.
-     * GET /produk/{product:slug}
-     */
     public function show(Product $product): View
     {
-        // Hanya hitung view untuk produk yang aktif, biar tidak dobel-log saat preview admin
         if ($product->is_active) {
             $product->increment('views_count');
         }
@@ -50,18 +48,14 @@ class ProductController extends Controller
 
         $related = $this->produkService->getRelated($product);
 
-        return view('pages.produk.show', [
-            'product'         => $product,
-            'related'         => $related,
-            'title'           => $product->meta_title ?: $product->name . ' - ' . config('app.name'),
-            'metaDescription' => $product->meta_description ?: $product->short_description,
-        ]);
+        $seo = app(\App\Services\SeoService::class)->forProduct($product);
+
+        return view('pages.produk.show', array_merge($seo, [
+            'product' => $product,
+            'related' => $related,
+        ]));
     }
 
-    /**
-     * Daftar produk berdasarkan kategori.
-     * GET /kategori/{category:slug}
-     */
     public function byCategory(Request $request, Category $category): View
     {
         $filters = array_merge(
@@ -69,17 +63,16 @@ class ProductController extends Controller
             ['kategori' => $category->slug]
         );
 
-        $products = $this->produkService->getListing($filters);
-
+        $products   = $this->produkService->getListing($filters);
         $categories = Category::active()->parentOnly()->orderBy('sort_order')->get();
 
-        return view('pages.produk.index', [
-            'products'        => $products,
-            'categories'      => $categories,
-            'activeCategory'  => $category,
-            'title'           => $category->meta_title ?: $category->name . ' - ' . config('app.name'),
-            'metaDescription' => $category->meta_description ?: $category->description,
-        ]);
+        $seo = app(\App\Services\SeoService::class)->forCategory($category);
+
+        return view('pages.produk.index', array_merge($seo, [
+            'products'       => $products,
+            'categories'     => $categories,
+            'activeCategory' => $category,
+        ]));
     }
 
     private function getAvailableMaterials()

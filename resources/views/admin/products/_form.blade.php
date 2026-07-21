@@ -186,6 +186,26 @@
     </div>
 </div>
 
+{{-- Video YouTube --}}
+<div class="bg-white/60 rounded-xl border border-walnut/10 p-6 space-y-4">
+    <h2 class="font-display text-base font-semibold text-walnut mb-2">Video YouTube</h2>
+
+    <div>
+        <label class="block text-sm font-medium text-walnut mb-1.5">Link Video YouTube</label>
+        <input type="url" name="youtube_url" value="{{ old('youtube_url', $product?->youtube_url) }}"
+            placeholder="https://www.youtube.com/watch?v=..."
+            class="w-full rounded-lg border-walnut/20 focus:border-rust focus:ring-rust/20 text-sm">
+        @error('youtube_url') <p class="text-xs text-rust mt-1">{{ $message }}</p> @enderror
+        <p class="text-xs text-ink/50 mt-1">Opsional. Video akan tampil di halaman detail produk.</p>
+    </div>
+
+    @if ($product?->youtube_embed_url)
+        <div class="aspect-video rounded-lg overflow-hidden border border-walnut/10">
+            <iframe src="{{ $product->youtube_embed_url }}" class="w-full h-full" allowfullscreen></iframe>
+        </div>
+    @endif
+</div>
+
 {{-- Varian Produk --}}
 <div class="bg-white/60 rounded-xl border-t-4 border-brass p-6 space-y-4">
     <div class="flex items-center justify-between mb-2">

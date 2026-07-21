@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,8 +17,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::with('category', 'primaryImage')
-            ->when($request->search, fn ($q) => $q->where('name', 'like', "%{$request->search}%"))
-            ->when($request->category_id, fn ($q) => $q->where('category_id', $request->category_id))
+            ->when($request->search, fn($q) => $q->where('name', 'like', "%{$request->search}%"))
+            ->when($request->category_id, fn($q) => $q->where('category_id', $request->category_id))
             ->latest()
             ->paginate(20)
             ->withQueryString();
@@ -37,12 +37,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $this->validateProduct($request);
+        $validated         = $this->validateProduct($request);
         $validated['slug'] = $this->uniqueSlug($validated['name']);
-        $validated = $this->applyBooleans($request, $validated);
+        $validated         = $this->applyBooleans($request, $validated);
 
         if ($request->hasFile('og_image')) {
-            $validated['og_image'] = $request->file('og_image')->store('products/og', 'public');
+            $validated['og_image'] = $this->storeAsWebp($request->file('og_image'), 'products/og'); // ← diubah
         }
 
         DB::transaction(function () use ($request, $validated, &$product) {
@@ -73,10 +73,7 @@ class ProductController extends Controller
         $validated = $this->applyBooleans($request, $validated);
 
         if ($request->hasFile('og_image')) {
-            if ($product->og_image) {
-                Storage::disk('public')->delete($product->og_image);
-            }
-            $validated['og_image'] = $request->file('og_image')->store('products/og', 'public');
+            $validated['og_image'] = $this->storeAsWebp($request->file('og_image'), 'products/og'); // ← diubah
         }
 
         DB::transaction(function () use ($request, $validated, $product) {
@@ -114,37 +111,38 @@ class ProductController extends Controller
     private function validateProduct(Request $request): array
     {
         return $request->validate([
-            'category_id'        => 'required|exists:categories,id',
-            'name'               => 'required|string|max:200',
-            'sku'                => 'nullable|string|max:100',
-            'description'        => 'nullable|string',
-            'short_description'  => 'nullable|string|max:500',
-            'price'              => 'required|numeric|min:0',
-            'sale_price'         => 'nullable|numeric|min:0|lt:price',
-            'stock'              => 'required|integer|min:0',
-            'weight'             => 'nullable|numeric|min:0',
-            'length'             => 'nullable|numeric|min:0',
-            'width'              => 'nullable|numeric|min:0',
-            'height'             => 'nullable|numeric|min:0',
-            'material'           => 'nullable|string|max:150',
-            'finishing'          => 'nullable|string|max:150',
-            'production_days'    => 'nullable|integer|min:0',
-            'meta_title'         => 'nullable|string|max:255',
-            'meta_description'  => 'nullable|string|max:500',
-            'canonical_url'      => 'nullable|url|max:255',
-            'og_title'           => 'nullable|string|max:255',
-            'og_description'     => 'nullable|string|max:500',
-            'og_image'           => 'nullable|image|max:2048',
+            'category_id'                          => 'required|exists:categories,id',
+            'name'                                 => 'required|string|max:200',
+            'sku'                                  => 'nullable|string|max:100',
+            'description'                          => 'nullable|string',
+            'short_description'                    => 'nullable|string|max:500',
+            'price'                                => 'required|numeric|min:0',
+            'sale_price'                           => 'nullable|numeric|min:0|lt:price',
+            'stock'                                => 'required|integer|min:0',
+            'weight'                               => 'nullable|numeric|min:0',
+            'length'                               => 'nullable|numeric|min:0',
+            'width'                                => 'nullable|numeric|min:0',
+            'height'                               => 'nullable|numeric|min:0',
+            'material'                             => 'nullable|string|max:150',
+            'finishing'                            => 'nullable|string|max:150',
+            'production_days'                      => 'nullable|integer|min:0',
+            'meta_title'                           => 'nullable|string|max:255',
+            'meta_description'                     => 'nullable|string|max:500',
+            'canonical_url'                        => 'nullable|url|max:255',
+            'og_title'                             => 'nullable|string|max:255',
+            'og_description'                       => 'nullable|string|max:500',
+            'og_image'                             => 'nullable|image|max:2048',
+            'youtube_url'                          => ['nullable', 'url', 'max:255', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/i'],
 
-            'images.*'                        => 'nullable|image|max:2048',
-            'existing_images.*.sort_order'    => 'nullable|integer|min:0',
+            'images.*'                             => 'nullable|image|max:2048',
+            'existing_images.*.sort_order'         => 'nullable|integer|min:0',
 
-            'new_variants.*.sku'              => 'nullable|string|max:100',
-            'new_variants.*.color'            => 'nullable|string|max:100',
-            'new_variants.*.size'             => 'nullable|string|max:100',
-            'new_variants.*.additional_price' => 'nullable|numeric',
-            'new_variants.*.stock'            => 'nullable|integer|min:0',
-            'new_variants.*.image'            => 'nullable|image|max:2048',
+            'new_variants.*.sku'                   => 'nullable|string|max:100',
+            'new_variants.*.color'                 => 'nullable|string|max:100',
+            'new_variants.*.size'                  => 'nullable|string|max:100',
+            'new_variants.*.additional_price'      => 'nullable|numeric',
+            'new_variants.*.stock'                 => 'nullable|integer|min:0',
+            'new_variants.*.image'                 => 'nullable|image|max:2048',
 
             'existing_variants.*.sku'              => 'nullable|string|max:100',
             'existing_variants.*.color'            => 'nullable|string|max:100',
@@ -158,8 +156,8 @@ class ProductController extends Controller
     private function applyBooleans(Request $request, array $validated): array
     {
         $validated['is_custom_order'] = $request->boolean('is_custom_order');
-        $validated['is_featured'] = $request->boolean('is_featured');
-        $validated['is_active'] = $request->boolean('is_active');
+        $validated['is_featured']     = $request->boolean('is_featured');
+        $validated['is_active']       = $request->boolean('is_active');
 
         return $validated;
     }
@@ -173,7 +171,7 @@ class ProductController extends Controller
         $hasPrimary = $product->images()->where('is_primary', true)->exists();
 
         foreach ($request->file('images') as $index => $file) {
-            $path = $file->store('products', 'public');
+            $path = $this->storeAsWebp($file, 'products');
 
             $product->images()->create([
                 'image_path' => $path,
@@ -223,7 +221,7 @@ class ProductController extends Controller
 
             $imagePath = null;
             if ($request->hasFile("new_variants.{$index}.image")) {
-                $imagePath = $request->file("new_variants.{$index}.image")->store('variants', 'public');
+                $imagePath = $this->storeAsWebp($request->file("new_variants.{$index}.image"), 'variants');
             }
 
             $product->variants()->create([
@@ -270,7 +268,7 @@ class ProductController extends Controller
                 if ($variant->image) {
                     Storage::disk('public')->delete($variant->image);
                 }
-                $updateData['image'] = $request->file("existing_variants.{$variantId}.image")->store('variants', 'public');
+                $updateData['image'] = $this->storeAsWebp($request->file("existing_variants.{$variantId}.image"), 'variants');
             }
 
             $variant->update($updateData);
@@ -281,17 +279,51 @@ class ProductController extends Controller
     {
         $base = Str::slug($name);
         $slug = $base;
-        $i = 1;
+        $i    = 1;
 
         while (
             Product::where('slug', $slug)
-                ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
-                ->exists()
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()
         ) {
             $slug = "{$base}-{$i}";
             $i++;
         }
 
         return $slug;
+    }
+
+    private function storeAsWebp(UploadedFile $file, string $folder, string $disk = 'public'): string
+    {
+        $source = match ($file->getMimeType()) {
+            'image/jpeg' => imagecreatefromjpeg($file->getRealPath()),
+            'image/png'  => imagecreatefrompng($file->getRealPath()),
+            'image/gif'  => imagecreatefromgif($file->getRealPath()),
+            'image/webp' => imagecreatefromwebp($file->getRealPath()),
+            default      => null,
+        };
+
+        // Fallback: kalau format tidak dikenali GD, simpan apa adanya
+        if (! $source) {
+            return $file->store($folder, $disk);
+        }
+
+        // Jaga transparansi PNG/GIF
+        imagepalettetotruecolor($source);
+        imagealphablending($source, true);
+        imagesavealpha($source, true);
+
+        $filename     = Str::random(40) . '.webp';
+        $relativePath = "{$folder}/{$filename}";
+        $fullPath     = Storage::disk($disk)->path($relativePath);
+
+        if (! is_dir(dirname($fullPath))) {
+            mkdir(dirname($fullPath), 0755, true);
+        }
+
+        imagewebp($source, $fullPath, 82); // 82 = kualitas, cukup tajam & hemat ukuran
+        imagedestroy($source);
+
+        return $relativePath;
     }
 }

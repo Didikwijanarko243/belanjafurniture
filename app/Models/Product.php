@@ -15,7 +15,7 @@ class Product extends Model
         'is_custom_order', 'production_days',
         'is_featured', 'is_active', 'views_count',
         'meta_title', 'meta_description', 'canonical_url',
-        'og_title', 'og_description', 'og_image',
+        'og_title', 'og_description', 'og_image', 'youtube_url',
     ];
 
     protected $casts = [
@@ -103,7 +103,21 @@ class Product extends Model
         return "{$this->length} x {$this->width} x {$this->height} cm";
     }
 
-    
+    // Ubah berbagai format link YouTube (watch?v=, youtu.be/, shorts/) jadi URL embed
+    public function getYoutubeEmbedUrlAttribute(): ?string
+    {
+        if (! $this->youtube_url) {
+            return null;
+        }
+
+        preg_match(
+            '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+            $this->youtube_url,
+            $matches
+        );
+
+        return isset($matches[1]) ? "https://www.youtube.com/embed/{$matches[1]}" : null;
+    }
 
     public function getRouteKeyName(): string
     {

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Furniture Murah Jombang'),
+    'name' => 'Brankas Murah Jombang',
 
     /*
     |--------------------------------------------------------------------------

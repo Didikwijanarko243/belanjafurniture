@@ -18,12 +18,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 // ============ HOME ============
-Route::get('/', function () {
-    return view('pages.home', [
-        'categories'       => Category::active()->parentOnly()->orderBy('sort_order')->get(),
-        'featuredProducts' => Product::active()->featured()->with('images')->take(8)->get(),
-    ]);
-})->name('home');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // ============ PRODUK ============
 Route::get('/produk', [ProductController::class, 'index'])->name('produk.index');

@@ -250,6 +250,16 @@
             </div>
         @endif
 
+        {{-- ============ VIDEO PRODUK ============ --}}
+        @if ($product->youtube_embed_url)
+            <div class="max-w-3xl mt-12">
+                <h2 class="font-display text-xl font-semibold text-ink mb-4">Video Produk</h2>
+                <div class="aspect-video rounded-lg overflow-hidden border border-walnut/10">
+                    <iframe src="{{ $product->youtube_embed_url }}" title="{{ $product->name }}" class="w-full h-full"
+                        allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+        @endif
 
 
         {{-- ============ PRODUK TERKAIT ============ --}}
