@@ -1,2 +1,27 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Blokir admin panel & auth
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+
+# Blokir halaman transaksi personal (bukan konten publik, session-based)
+Disallow: /cart
+Disallow: /wishlist
+Disallow: /konsultasi
+
+# Lacak pesanan pakai kode unik di URL -> blokir supaya tidak ke-index satu-satu
+Disallow: /lacak-pesanan/*
+
+# Blokir parameter filter produk (hindari duplicate content)
+Disallow: /*?kategori=
+Disallow: /*?sort=
+Disallow: /*?page=
+Disallow: /*?warna=
+Disallow: /*?ukuran=
+
+Disallow: /storage/
+Disallow: /vendor/
+
+Sitemap: https://shop.produsenbrankasmurah.com/sitemap.xml

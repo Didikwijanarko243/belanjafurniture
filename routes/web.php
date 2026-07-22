@@ -100,3 +100,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
     });
 });
+
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index']);
