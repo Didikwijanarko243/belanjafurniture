@@ -12,13 +12,13 @@
                 Tentang Kami
             </span>
             <h1 class="font-display text-4xl sm:text-5xl font-semibold text-walnut leading-tight mb-6">
-                Dari kayu pilihan Jombang,<br class="hidden sm:block">
-                lahir furniture untuk rumah yang terasa pulang
+                Dari tenaga ahli yang berpengalaman,<br class="hidden sm:block">
+                lahir brankas yang melindungi yang paling berharga
             </h1>
             <p class="text-ink/70 text-lg leading-relaxed max-w-2xl mx-auto">
-                Naima Furniture dibangun oleh tangan-tangan pengrajin lokal yang percaya bahwa perabot
-                yang baik bukan sekadar mengisi ruang, tapi menemani keseharian keluarga selama
-                bertahun-tahun ke depan.
+                Brankas Murah Jombang dibangun oleh tenaga produksi lokal yang percaya bahwa keamanan
+                yang baik bukan sekadar kotak baja, tapi ketenangan pikiran keluarga dan bisnis Anda
+                selama bertahun-tahun ke depan.
             </p>
         </div>
     </section>
@@ -32,7 +32,7 @@
 
             <div class="text-center max-w-2xl mx-auto mb-14">
                 <span class="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-brass mb-3">
-                    Kenapa Naima
+                    Kenapa Brankas Murah Jombang
                 </span>
                 <h2 class="font-display text-3xl sm:text-4xl font-semibold text-walnut">
                     Keunggulan yang kami jaga di setiap produk
@@ -51,10 +51,10 @@
                             <path d="M21 6.9L12 12 3 6.9" />
                         </svg>
                     </div>
-                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Kayu Solid Pilihan</h3>
+                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Plat Baja Solid Pilihan</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
-                        Kami hanya memakai kayu solid yang sudah melalui proses pengeringan yang tepat,
-                        sehingga tidak mudah retak, melengkung, atau dimakan rayap.
+                        Kami hanya memakai plat baja dengan ketebalan dan kualitas terukur,
+                        sehingga tahan terhadap upaya bongkar paksa dan benturan.
                     </p>
                 </div>
 
@@ -66,10 +66,10 @@
                             <path d="M12 20s-7-4.35-9.5-8.5C1 8 2.5 4.5 6 4.5c2 0 3.5 1.2 4 2 .5-.8 2-2 4-2 3.5 0 5 3.5 3.5 7C19 15.65 12 20 12 20z" />
                         </svg>
                     </div>
-                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Dikerjakan Pengrajin Lokal</h3>
+                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Diproduksi Langsung Tenaga Ahli</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
-                        Setiap potong furniture dibentuk dengan tangan oleh pengrajin di Jombang, menjaga
-                        detail sambungan dan finishing yang sering terlewat di produksi massal.
+                        Setiap brankas dirakit dan dilas oleh tenaga produksi berpengalaman,
+                        menjaga kualitas sambungan dan sistem kunci di setiap unit.
                     </p>
                 </div>
 
@@ -84,10 +84,10 @@
                             <path d="M16 4v5" />
                         </svg>
                     </div>
-                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Bisa Custom & Made to Order</h3>
+                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Bisa Custom Ukuran & Sistem Kunci</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
-                        Ukuran ruang setiap rumah berbeda. Kami melayani pemesanan custom ukuran,
-                        warna finishing, dan detail sesuai kebutuhan Anda.
+                        Kebutuhan setiap rumah dan bisnis berbeda. Kami melayani pemesanan custom ukuran,
+                        jenis kunci (kombinasi, kunci pas, elektronik), dan kapasitas sesuai kebutuhan Anda.
                     </p>
                 </div>
 
@@ -99,10 +99,10 @@
                             <path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6-5.6-3-5.6 3 1.1-6L3 8.9 9 8l3-6z" />
                         </svg>
                     </div>
-                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Finishing Tahan Lama</h3>
+                    <h3 class="font-display text-lg font-semibold text-walnut mb-2">Tahan Api & Anti Karat</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
-                        Lapisan finishing kami dipilih agar tahan terhadap kelembapan dan pemakaian
-                        harian, tanpa menutupi keindahan serat kayu asli.
+                        Lapisan pelindung dan konstruksi kami dirancang agar tahan terhadap panas dan
+                        kelembapan, menjaga dokumen serta barang berharga tetap aman.
                     </p>
                 </div>
 
@@ -117,8 +117,8 @@
                     </div>
                     <h3 class="font-display text-lg font-semibold text-walnut mb-2">Garansi & Layanan Purna Jual</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
-                        Kami tetap mendampingi setelah barang sampai — mulai dari garansi konstruksi
-                        hingga bantuan perawatan furniture di rumah Anda.
+                        Kami tetap mendampingi setelah brankas sampai — mulai dari garansi kunci dan
+                        konstruksi hingga bantuan servis di lokasi Anda.
                     </p>
                 </div>
 
@@ -134,7 +134,7 @@
                     <h3 class="font-display text-lg font-semibold text-walnut mb-2">Harga Transparan, Langsung dari Produsen</h3>
                     <p class="text-sm text-ink/65 leading-relaxed">
                         Sebagai produsen sekaligus penjual, kami memangkas rantai perantara sehingga
-                        harga yang Anda bayar sesuai dengan kualitas yang Anda terima.
+                        harga yang Anda bayar sesuai dengan kualitas dan keamanan yang Anda terima.
                     </p>
                 </div>
 
@@ -146,10 +146,10 @@
     <section class="bg-walnut-dark">
         <div class="max-w-4xl mx-auto px-6 lg:px-8 py-16 text-center">
             <h2 class="font-display text-2xl sm:text-3xl font-semibold text-canvas mb-4">
-                Siap menemukan furniture yang pas untuk rumah Anda?
+                Siap menemukan brankas yang pas untuk kebutuhan Anda?
             </h2>
             <p class="text-canvas/70 mb-8 max-w-xl mx-auto">
-                Jelajahi koleksi kami atau hubungi tim Naima untuk konsultasi ukuran dan custom order.
+                Jelajahi koleksi kami atau hubungi tim Brankas Murah Jombang untuk konsultasi ukuran dan tipe kunci.
             </p>
             <div class="flex items-center justify-center gap-4 flex-wrap">
                 <a href="{{ route('produk.index') }}"

@@ -6,14 +6,14 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
             <div>
                 <span class="inline-block text-sm font-medium text-rust tracking-wide uppercase mb-4">
-                    Brankas Tahan Api
+                    Brankas Tahan Api & Bongkar
                 </span>
                 <h1 class="font-display text-5xl lg:text-6xl leading-tight text-ink mb-6">
-                    Keamanan terbaik untuk setiap aset berharga.
+                    Brankas Murah Jombang, keamanan maksimal untuk aset berharga Anda.
                 </h1>
                 <p class="text-ink/70 text-lg leading-relaxed mb-8 max-w-lg">
-                    Perlindungan andal dengan konstruksi kokoh dan ketahanan terhadap api, untuk ketenangan rumah dan bisnis
-                    Anda.
+                    Produsen brankas dengan konstruksi baja solid dan sistem penguncian andal, tahan api dan tahan bongkar,
+                    dipercaya untuk kebutuhan rumah, toko, hingga perbankan.
                 </p>
                 <div class="flex gap-4">
                     <a href="{{ route('produk.index') }}"
@@ -45,7 +45,7 @@
     {{-- ============ KATEGORI ============ --}}
     <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20">
         <x-section-heading title="Temukan Brankas yang Tepat"
-            subtitle="Pilih kategori brankas yang dirancang untuk memberikan perlindungan maksimal bagi dokumen, uang tunai, dan barang berharga Anda." />
+            subtitle="Pilih kategori brankas yang dirancang untuk kebutuhan Anda — mulai dari brankas rumah tangga, brankas toko/kasir, hingga brankas khazanah untuk perbankan dan perhiasan." />
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
             @forelse($categories ?? [] as $category)
@@ -62,7 +62,8 @@
 
     {{-- ============ PRODUK UNGGULAN ============ --}}
     <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <x-section-heading title="Produk Unggulan" subtitle="Pilihan favorit pelanggan kami." />
+        <x-section-heading title="Produk Unggulan"
+            subtitle="Brankas paling diminati pelanggan kami, dari rumah tangga hingga perbankan." />
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($featuredProducts ?? [] as $product)
@@ -88,11 +89,14 @@
                 <x-testimonial-card :name="$testimonial->name" :role="$testimonial->role ?? null" :comment="$testimonial->comment" :rating="$testimonial->rating" />
             @empty
                 <x-testimonial-card name="Rina W." role="Surabaya"
-                    comment="Meja makannya kokoh dan seratnya cantik banget, sesuai foto." :rating="5" />
+                    comment="Brankasnya kokoh, aman untuk simpan surat-surat penting dan perhiasan di rumah."
+                    :rating="5" />
                 <x-testimonial-card name="Andi P." role="Malang"
-                    comment="Pengiriman aman walau ukurannya besar, dikemas rapi." :rating="5" />
-                <x-testimonial-card name="Dewi S." role="Sidoarjo" comment="Respon WhatsApp cepat, custom ukuran juga bisa."
-                    :rating="4" />
+                    comment="Pengiriman aman walau bobotnya berat, dikemas rapi dan sampai tepat waktu."
+                    :rating="5" />
+                <x-testimonial-card name="Dewi S." role="Sidoarjo"
+                    comment="Respon WhatsApp cepat, konsultasi ukuran dan tipe brankas juga dibantu sampai jelas."
+                    :rating="5" />
             @endforelse
         </div>
     </section>
@@ -104,7 +108,7 @@
                 Lindungi yang Paling Berharga, Mulai Hari Ini
             </h2>
             <p class="text-canvas/70 mb-8 max-w-lg mx-auto">
-                Hubungi kami sekarang dan dapatkan rekomendasi brankas terbaik sesuai kebutuhan Anda.
+                Hubungi Brankas Murah Jombang sekarang dan dapatkan rekomendasi brankas terbaik sesuai kebutuhan Anda.
             </p>
             <a href="{{ 'https://wa.me/' . config('shop.whatsapp_number', '6281200000000') }}"
                 class="inline-flex items-center px-7 py-3.5 bg-rust hover:bg-rust-dark text-canvas font-semibold rounded-lg transition-colors">

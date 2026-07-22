@@ -14,7 +14,7 @@
             </h1>
             <p class="text-ink/70 text-lg leading-relaxed max-w-2xl mx-auto">
                 Setiap pesanan kami tangani manual lewat WhatsApp, supaya ukuran, warna, dan detail
-                furniture Anda benar-benar sesuai sebelum dikirim.
+                brankas Anda benar-benar sesuai sebelum dikirim.
             </p>
         </div>
     </section>
@@ -30,7 +30,7 @@
                     Alur Pemesanan
                 </span>
                 <h2 class="font-display text-3xl sm:text-4xl font-semibold text-walnut">
-                    5 langkah dari lihat produk sampai furniture sampai di rumah
+                    5 langkah dari lihat produk sampai brankas sampai di rumah
                 </h2>
             </div>
 
@@ -139,7 +139,7 @@
                 <ul class="text-sm text-ink/65 space-y-2">
                     <li class="flex items-start gap-2">
                         <span class="text-brass mt-1">•</span>
-                        <span>Transfer bank ke rekening resmi Naima Furniture</span>
+                        <span>Transfer bank ke rekening resmi Ainurrohmah</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-brass mt-1">•</span>

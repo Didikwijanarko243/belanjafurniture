@@ -191,7 +191,7 @@
 
             <div>
                 <div class="font-display text-2xl font-semibold text-canvas mb-3">
-                    {{ config('app.name', 'Kayuna') }}
+                    {{ config('app.name', 'Brankas Murah Jombang') }}
                 </div>
                 <p class="text-sm text-canvas/60 leading-relaxed">
                     Brankas tahan api berkualitas, dirancang untuk melindungi dokumen, uang tunai, dan aset berharga
@@ -231,13 +231,13 @@
                 <h3 class="font-semibold text-sm text-brass mb-4 tracking-wide uppercase">Hubungi Kami</h3>
                 <ul class="space-y-2 text-sm text-canvas/70">
                     <li>WhatsApp: {{ config('shop.whatsapp_display', '+62 812-0000-0000') }}</li>
-                    <li>Email: {{ config('shop.email', 'halo@kayuna.id') }}</li>
+                    <li>Email: {{ config('shop.email', 'halo@brankasmurahjombang.id') }}</li>
                 </ul>
             </div>
         </div>
 
         <div class="border-t border-canvas/10 py-6 text-center text-xs text-canvas/50">
-            &copy; {{ date('Y') }} {{ config('app.name', 'Kayuna') }}. Semua hak dilindungi.
+            &copy; {{ date('Y') }} {{ config('app.name', 'Brankas Murah Jombang') }}. Semua hak dilindungi.
         </div>
     </footer>
 

@@ -7,7 +7,7 @@ class PageController extends Controller
     {
         $seo = app(\App\Services\SeoService::class)->forPage(
             'Tentang Kami - ' . config('app.name'),
-            'Kenali lebih dekat Naima Furniture, pembuat furniture kayu solid berkualitas.'
+            'Kenali lebih dekat Brankas Murah Jombang, produsen brankas baja solid berkualitas.'
         );
 
         return view('pages.tentang', $seo);
@@ -17,7 +17,7 @@ class PageController extends Controller
     {
         $seo = app(\App\Services\SeoService::class)->forPage(
             'Kontak - ' . config('app.name'),
-            'Hubungi Naima Furniture via WhatsApp, email, atau kunjungi workshop kami di Jombang untuk konsultasi produk dan custom order.'
+            'Hubungi Brankas Murah Jombang via WhatsApp, email, atau kunjungi workshop kami di Jombang untuk konsultasi produk dan custom order.'
         );
 
         return view('pages.kontak', $seo);
@@ -27,7 +27,7 @@ class PageController extends Controller
     {
         $seo = app(\App\Services\SeoService::class)->forPage(
             'Cara Belanja - ' . config('app.name'),
-            'Panduan lengkap cara belanja furniture kayu di Naima Furniture, mulai dari memilih produk hingga proses pengiriman ke rumah Anda.'
+            'Panduan lengkap cara belanja brankas di Brankas Murah Jombang, mulai dari memilih produk hingga proses pengiriman ke rumah Anda.'
         );
 
         return view('pages.cara-belanja', $seo);
